@@ -16,9 +16,11 @@ oc new-app -i nodejs https://github.com/sclorg/nodejs-ex
 ### Q3.
 ```
 oc new-project q3
+# Creating configmap
 oc create configmap q3-config --from-file=cmapq3.properties
+# Creating pods which has configmap mounted. It echo content.
 oc create -f q3pod.yaml
-oc logs q3
+oc logs -f q3
 ```
 
 ### Q4.
@@ -28,13 +30,15 @@ oc new-project q4
 oc create -f q4dc.yaml
 oc create secret generic q4secret     --from-literal username=kbaig     --from-literal password=funpass
 oc set env dc/q4   --from secret/q4secret
-oc logs q4-2-rjpxv
+oc logs -f q4-2-rjpxv
 ```
 
 ### Q5.
 
 ```
 oc new-project q5
+# Create pod which has init container which download image and then main container give it's sum
+# They share the volume
 oc create -f q5-pod.yaml
 oc logs -f q5
 ```
@@ -43,6 +47,7 @@ oc logs -f q5
 
 ```
 oc new-project q6
+# Create a pod containing containers having non persistence volume
 oc create -f q6-pod.yaml
 oc logs -f q6
 ```
