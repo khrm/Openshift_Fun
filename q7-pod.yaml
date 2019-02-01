@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+  labels:
+    app: redis
+spec:
+  containers:
+  - image: centos/redis-32-centos7
+    imagePullPolicy: IfNotPresent
+    name: redis
+    ports:
+    - containerPort: 6379
+      protocol: TCP

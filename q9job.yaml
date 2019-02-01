@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: echo
+spec:
+  parallelism: 4    
+  completions: 4    
+  template:         
+    metadata:
+      name: echo
+    spec:
+      containers:
+      - name: echo
+        image: busybox
+        command: ["sh",  "-c", "echo fun", "&& ls"]
+      restartPolicy: OnFailure    

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  name: q4
+spec:
+  replicas: 1  
+  selector:    
+    name: q4
+  template:    
+    metadata:
+      labels:  
+        name: q4 
+    spec:
+     containers:
+      - name: test-container
+        image: gcr.io/google_containers/busybox
+        command: [ "/bin/sh", "-c", "echo $USERNAME $PASSWORD && sleep 1000" ]
+     restartPolicy: Always
+  strategy:
+    type: Rolling      
