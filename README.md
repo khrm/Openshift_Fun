@@ -28,8 +28,11 @@ oc logs -f q3
 ```
 oc new-project q4
 oc create -f q4dc.yaml
-oc create secret generic q4secret     --from-literal username=kbaig     --from-literal password=funpass
+# Create Secret
+oc create secret generic q4secret --from-literal username=kbaig --from-literal password=funpass
+# Inject Secret
 oc set env dc/q4   --from secret/q4secret
+# New deployment will happen. Check in new container
 oc logs -f q4-2-rjpxv
 ```
 
@@ -37,8 +40,8 @@ oc logs -f q4-2-rjpxv
 
 ```
 oc new-project q5
-# Create pod which has init container which download image and then main container give it's sum
-# They share the volume
+# Create pod which has init container which download image and then main container give it's check sum
+# They share the volume.
 oc create -f q5-pod.yaml
 oc logs -f q5
 ```
@@ -56,8 +59,10 @@ oc logs -f q6
 
 ```
 oc new-project q7
+# Create a redis pod
 oc create -f q7-pod.yaml
 oc logs -f q7
+# Create NodePort Service
 oc create -f q7-service.yaml
 # Checked it using redis-cli -h 172.30.32.223 -p 31113 
 ```
@@ -75,6 +80,7 @@ oc export all --as-template=cakefun > fun.yaml
 
 ```
 oc new-project q9
+# Create 4 parallel jobs that just echo fun
 oc create -f q9job.yaml
 ```
 
@@ -96,3 +102,15 @@ Liveness probe is a probe that checks the health of application. Liveness probe 
 Readiness probe is probe that checks whether application is ready to receive the request. If it fails, then application doesn't receive request from service.
 We would use readiness probe if application requires time to load data, fetch data for the application to be ready.
 We would use liveness probe to ensure that our app is reliable.
+
+Resources used: OKD.IO 
+
+https://docs.okd.io/3.11/dev_guide/configmaps.html
+
+https://docs.okd.io/latest/dev_guide/expose_service/expose_internal_ip_nodeport.html
+
+https://docs.okd.io/latest/architecture/core_concepts/containers_and_images.html
+
+https://docs.okd.io/latest/dev_guide/secrets.html
+
+https://docs.okd.io/latest/dev_guide/jobs.html
